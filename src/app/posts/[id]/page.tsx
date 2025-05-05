@@ -10,9 +10,9 @@ type PostProps = {
 
 export default async function Post({ params }: PostProps) {
   // Fetch the post by ID from the SQLite database
-  const post = await prisma.post.findUnique({
+  const post = await (await prisma).post.findUnique({
     where: {
-      id: parseInt(params.id, 10),
+      id: parseInt((await params).id, 10),
     },
   });
 
