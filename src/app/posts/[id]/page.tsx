@@ -1,3 +1,7 @@
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
 type PostProps = {
   params: {
     id: string;
@@ -5,8 +9,20 @@ type PostProps = {
 };
 
 export default async function Post({ params }: PostProps) {
-  const res = await fetch(`https://dummyjson.com/posts/${(await params).id}`);
-  const post = await res.json();
+  // Fetch the post by ID from the SQLite database
+  const post = await prisma.post.findUnique({
+    where: {
+      id: parseInt(params.id, 10),
+    },
+  });
+
+  if (!post) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
+        <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-8 text-center">
