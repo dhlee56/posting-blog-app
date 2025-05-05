@@ -1,4 +1,5 @@
-
+"use client";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { handleCreatePost } from "./actions";
 
 export default function CreatePost() {
@@ -30,6 +31,14 @@ export default function CreatePost() {
           Submit
         </button>
       </form>
+      <button
+        onClick={() => (window.location.href = "/api/auth/logout")}
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Logout
+      </button>
+      {/* <LogoutLink>Log out</LogoutLink> */}
+
     </div>
   );
 }
